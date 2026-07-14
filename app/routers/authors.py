@@ -4,11 +4,17 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
 
+from app.security import get_current_user
+
 from app.models import Author
 from app.repositories import AuthorRepository
 
 
-router = APIRouter(prefix="/authors", tags=["authors"])
+router = APIRouter(
+    prefix="/authors",
+    tags=["authors"],
+    dependencies=[Depends(get_current_user)],
+)
 
 
 def get_author_repository() -> AuthorRepository:

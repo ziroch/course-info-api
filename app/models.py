@@ -71,18 +71,25 @@ class Author(BaseModel):
         return _filled(value)
 
 
-class Grades(BaseModel):
+class Grade(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     id: int | None = None
     authorId: int
     courseId: str
-    value: int
+    grade: int
 
     @field_validator("courseId")
     @classmethod
     def course_id_must_be_filled(cls, value: str) -> str:
         return _filled(value)
+
+    @field_validator("grade")
+    @classmethod
+    def grade_must_be_valid(cls, value: int) -> int:
+        if value < 1 or value > 100:
+            raise ValueError("La calificación debe estar entre 1 y 100")
+        return value
 
 
 def course_from_row(row: Any) -> Course:
@@ -104,10 +111,64 @@ def author_from_row(row: Any) -> Author:
     )
 
 
-def grade_from_row(row: Any) -> Grades:
-    return Grades(
+def grade_from_row(row: Any) -> Grade:
+    return Grade(
         id=row["id"],
         authorId=row["author_id"],
         courseId=row["course_id"],
-        value=row["value"],
+        grade=row["grade"],
+    )
+class UserCreate(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    username: str
+    fullName: str
+    email: str
+    password: str
+
+    @field_validator("username", "fullName", "email", "password")
+    @classmethod
+    def required_fields_must_be_filled(cls, value: str) -> str:
+        return _filled(value)
+
+    @field_validator("password")
+    @classmethod
+    def password_must_be_valid(cls, value: str) -> str:
+        if len(value) < 8:
+            raise ValueError(
+                "La contraseña debe contener al menos 8 caracteres"
+            )
+        return value
+
+
+class User(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    id: int
+    username: str
+    fullName: str
+    email: str
+    disabled: bool = False
+
+
+class UserInDB(User):
+    hashedPassword: str
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    username: str | None = None
+
+def user_from_row(row: Any) -> UserInDB:
+    return UserInDB(
+        id=row["id"],
+        username=row["username"],
+        fullName=row["full_name"],
+        email=row["email"],
+        hashedPassword=row["hashed_password"],
+        disabled=bool(row["disabled"]),
     )

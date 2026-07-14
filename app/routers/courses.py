@@ -4,11 +4,17 @@ from typing import Annotated
 
 from fastapi import APIRouter, Body, Depends, HTTPException, Response
 
+from app.security import get_current_user
+
 from app.models import Course, CourseUpdate
 from app.repositories import CourseRepository
 
 
-router = APIRouter(prefix="/courses", tags=["courses"])
+router = APIRouter(
+    prefix="/courses",
+    tags=["courses"],
+    dependencies=[Depends(get_current_user)],
+)
 
 
 def get_course_repository() -> CourseRepository:

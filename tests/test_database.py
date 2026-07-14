@@ -1,31 +1,53 @@
 from __future__ import annotations
 
 from app.database import connect, init_database
-from app.models import Grades
-from app.repositories import GradesRepository
+from app.models import Grade
+from app.repositories import GradeRepository
 
 
-def test_database_initialization_creates_expected_tables(db_path: str) -> None:
+def test_database_initialization_creates_expected_tables(
+    db_path: str,
+) -> None:
     init_database(db_path)
 
     with connect(db_path) as connection:
         tables = {
             row["name"]
             for row in connection.execute(
-                "SELECT name FROM sqlite_master WHERE type = 'table'"
+                """
+                SELECT name
+                FROM sqlite_master
+                WHERE type = 'table'
+                """
             ).fetchall()
         }
 
-    assert {"courses", "authors", "calificacion"}.issubset(tables)
+    assert {
+        "courses",
+        "authors",
+        "grades",
+        "users",
+    }.issubset(tables)
 
 
-def test_calificacion_repository_persists_domain_model(db_path: str) -> None:
-    repository = GradesRepository(db_path)
+def test_grade_repository_persists_domain_model(
+    db_path: str,
+) -> None:
+    repository = GradeRepository(db_path)
 
-    repository.save_calificacion(Grades(authorId=1, courseId="course-1", nota=5))
+    grade_id = repository.save_grade(
+        Grade(
+            authorId=1,
+            courseId="course-1",
+            grade=5,
+        )
+    )
 
-    calificaciones = repository.get_all_calificaciones()
-    assert len(calificaciones) == 1
-    assert calificaciones[0].authorId == 1
-    assert calificaciones[0].courseId == "course-1"
-    assert calificaciones[0].nota == 5
+    grades = repository.get_all_grades()
+
+    assert grade_id is not None
+    assert len(grades) == 1
+    assert grades[0].id == grade_id
+    assert grades[0].authorId == 1
+    assert grades[0].courseId == "course-1"
+    assert grades[0].grade == 5

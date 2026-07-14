@@ -19,3 +19,11 @@ CREATE TABLE IF NOT EXISTS grades(
     course_id TEXT NOT NULL,
     grade INTEGER NOT NULL
 );
+CREATE TABLE IF NOT EXISTS users(
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    username TEXT NOT NULL UNIQUE,
+    full_name TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
+    hashed_password TEXT NOT NULL,
+    disabled INTEGER NOT NULL DEFAULT 0
+);
