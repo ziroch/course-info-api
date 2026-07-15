@@ -497,18 +497,25 @@ Resultado obtenido:
 ### Swagger general
 
 ![Swagger general](capturas/01-swagger-general.png)
+![Swagger general](capturas/01-swagger-general-2.png)
+![Swagger general](capturas/01-swagger-general-3.png)
+
 
 ### Registro de usuario
 
 ![Registro](capturas/02-registro-usuario.png)
+![Registro](capturas/02-registro-usuario-2.png)
+
 
 ### Login JWT
 
 ![Login JWT](capturas/03-login-jwt.png)
+![Login JWT](capturas/03-login-jwt-2.png)
 
 ### Autorización OAuth2
 
 ![Authorize](capturas/04-authorize.png)
+![Authorize](capturas/04-authorize-2.png)
 
 ### Acceso sin token
 
@@ -529,6 +536,7 @@ Resultado obtenido:
 ### Actualizar Grade
 
 ![Actualizar Grade](capturas/09-update-grade.png)
+![Actualizar Grade](capturas/09-update-grade-2.png)
 
 ### Eliminar Grade
 
