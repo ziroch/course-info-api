@@ -216,13 +216,13 @@ ucom-course-info-api/
 ### 1. Clonar el repositorio
 
 ```powershell
-git clone https://github.com/hernansilgueira-ccp/ucom-course-info-api.git
+git clone https://github.com/ziroch/course-info-api.git
 ```
 
 ### 2. Ingresar en el proyecto
 
 ```powershell
-cd ucom-course-info-api
+cd course-info-api
 ```
 
 ### 3. Crear el entorno virtual
@@ -321,9 +321,9 @@ Ejemplo:
 
 ```json
 {
-  "username": "hernan",
-  "fullName": "Hernan Silgueira",
-  "email": "hernan@example.com",
+  "username": "vjmartinez",
+  "fullName": "Victor Martinez",
+  "email": "vjmartinez@example.com",
   "password": "ClaveSegura123"
 }
 ```
@@ -339,7 +339,7 @@ POST /auth/login
 Datos enviados como formulario:
 
 ```text
-username: hernan
+username: vjmartinez
 password: ClaveSegura123
 ```
 
@@ -564,7 +564,7 @@ Resultado obtenido:
 
 ## Autor
 
-**Hernan Silgueira**
+**Victor Martinez**
 
 Universidad UCOM  
 Materia: Integración de Sistemas  

@@ -4,9 +4,9 @@ from fastapi.testclient import TestClient
 
 
 USER_DATA = {
-    "username": "hernan",
-    "fullName": "Hernan Silgueira",
-    "email": "hernan@example.com",
+    "username": "vjmartinez",
+    "fullName": "Victor Martinez",
+    "email": "vjmartinez@example.com",
     "password": "ClaveSegura123",
 }
 
@@ -40,9 +40,9 @@ def test_register_user(
     data = register_user(auth_client)
 
     assert data["id"] is not None
-    assert data["username"] == "hernan"
-    assert data["fullName"] == "Hernan Silgueira"
-    assert data["email"] == "hernan@example.com"
+    assert data["username"] == "vjmartinez"
+    assert data["fullName"] == "Victor Martinez"
+    assert data["email"] == "vjmartinez@example.com"
     assert data["disabled"] is False
     assert "password" not in data
     assert "hashedPassword" not in data
@@ -56,7 +56,7 @@ def test_duplicate_username_is_rejected(
     response = auth_client.post(
         "/auth/register",
         json={
-            "username": "hernan",
+            "username": "vjmartinez",
             "fullName": "Otro Usuario",
             "email": "otro@example.com",
             "password": "OtraClave123",
@@ -76,7 +76,7 @@ def test_duplicate_email_is_rejected(
         json={
             "username": "otro_usuario",
             "fullName": "Otro Usuario",
-            "email": "hernan@example.com",
+            "email": "vjmartinez@example.com",
             "password": "OtraClave123",
         },
     )
@@ -120,7 +120,7 @@ def test_login_with_wrong_password_is_rejected(
     response = auth_client.post(
         "/auth/login",
         data={
-            "username": "hernan",
+            "username": "vjmartinez",
             "password": "ClaveIncorrecta123",
         },
     )
@@ -204,7 +204,7 @@ def test_get_authenticated_user(
 
     data = response.json()
 
-    assert data["username"] == "hernan"
-    assert data["fullName"] == "Hernan Silgueira"
-    assert data["email"] == "hernan@example.com"
+    assert data["username"] == "vjmartinez"
+    assert data["fullName"] == "Victor Martinez"
+    assert data["email"] == "vjmartinez@example.com"
     assert data["disabled"] is False
